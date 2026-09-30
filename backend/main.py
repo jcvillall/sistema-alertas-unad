@@ -1,13 +1,14 @@
 from fastapi import FastAPI
 from database import Base, engine
 from models import estudiante, alerta, consentimiento
-from routers import estudiantes
+from routers import estudiantes, alertas
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Sistema de Alertas UNAD", version="1.0.0")
 
 app.include_router(estudiantes.router)
+app.include_router(alertas.router)
 
 @app.get("/")
 def root():
