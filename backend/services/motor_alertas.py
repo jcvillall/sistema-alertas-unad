@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from config import get_settings
 from models.alerta import Alerta, TipoAlerta, EstadoAlerta
 from models.registro_academico import Matricula
+from datetime import timedelta
 
 def evaluar_matricula(m: Matricula, ahora: datetime):
     """Devuelve la lista de (tipo, descripcion) que aplican a una matrícula."""
@@ -46,6 +47,7 @@ def evaluar_matricula(m: Matricula, ahora: datetime):
 def ejecutar_evaluacion(db: Session):
     """Evalúa todas las matrículas y crea alertas nuevas sin duplicar."""
     ahora = datetime.now(timezone.utc)
+    limite = ahora - timedelta(days=get_settings().dias_entre_alertas)
     matriculas = db.query(Matricula).all()
     creadas = 0
     omitidas = 0
@@ -56,7 +58,7 @@ def ejecutar_evaluacion(db: Session):
                 Alerta.estudiante_id == m.estudiante_id,
                 Alerta.tipo == tipo,
                 Alerta.curso == m.curso.nombre,
-                Alerta.estado == EstadoAlerta.pendiente,
+                Alerta.fecha_creacion >= limite,
             ).first()
             if existente:
                 omitidas += 1

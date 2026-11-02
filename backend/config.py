@@ -11,6 +11,14 @@ class Settings(BaseSettings):
     dias_inactividad_max: int = 7
     nota_minima: float = 3.0
 
+        # Días mínimos entre alertas repetidas del mismo tipo y curso
+    dias_entre_alertas: int = 7
+
+    # Tarea programada
+    scheduler_activo: bool = True
+    scheduler_hora: int = 2                # hora diaria de ejecución (0-23)
+    scheduler_intervalo_minutos: int = 0   # si es mayor que 0, ejecuta cada N minutos (para pruebas)
+
     # Notificaciones por correo ("consola" o "smtp")
     email_modo: str = "consola"
     email_remitente: str = "alertas@sistema-alertas.local"
