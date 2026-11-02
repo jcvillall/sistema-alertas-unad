@@ -7,9 +7,17 @@ class Settings(BaseSettings):
     environment: str = "development"
 
     # Umbrales configurables del motor de alertas
-    umbral_asistencia: float = 0.80      # menos de 80% de asistencia genera alerta
-    dias_inactividad_max: int = 7        # más de 7 días sin ingresar al aula genera alerta
-    nota_minima: float = 3.0             # nota por debajo de 3.0 genera alerta
+    umbral_asistencia: float = 0.80
+    dias_inactividad_max: int = 7
+    nota_minima: float = 3.0
+
+    # Notificaciones por correo ("consola" o "smtp")
+    email_modo: str = "consola"
+    email_remitente: str = "alertas@sistema-alertas.local"
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_usuario: str = ""
+    smtp_password: str = ""
 
     class Config:
         env_file = ".env"
