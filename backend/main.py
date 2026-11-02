@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from database import Base, engine
-from models import estudiante, alerta, consentimiento
+from models import estudiante, alerta, consentimiento, registro_academico
 from routers import estudiantes, alertas
 
 Base.metadata.create_all(bind=engine)
